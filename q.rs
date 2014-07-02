@@ -65,6 +65,7 @@ fn test_iter() {
   q.enqueue(1);
 
   assert!(q.iter().count() == 3);
+  assert!(q.iter().fold(0, |acc, &val| acc + val) == 6);
 }
 
 pub fn main() {
