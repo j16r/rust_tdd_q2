@@ -61,6 +61,16 @@ fn test_enqueue() {
 }
 
 #[test]
+#[should_fail]
+fn test_enqueue_too_many_items() {
+  let mut q = Q::<int>::new();
+  
+  for _ in range(0u, 11u) {
+    q.enqueue(0);
+  }
+}
+
+#[test]
 fn test_size() {
   let mut q = Q::<int>::new();
   
