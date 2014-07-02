@@ -20,6 +20,10 @@ impl<T : Default + Copy> Q<T> {
     self.count += 1
   }
 
+  pub fn size(&self) -> uint {
+    self.count
+  }
+
   pub fn iter<'r>(&'r self) -> Box<QCursor<'r, T>> {
     box QCursor {q: self, position: 0}
   }
@@ -54,6 +58,16 @@ fn test_enqueue() {
   
   q.enqueue(99);
   assert!(!q.empty());
+}
+
+#[test]
+fn test_size() {
+  let mut q = Q::<int>::new();
+  
+  q.enqueue(7);
+  q.enqueue(102);
+  
+  assert!(q.size() == 2);
 }
 
 #[test]
