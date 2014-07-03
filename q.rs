@@ -97,6 +97,16 @@ fn test_dequeue() {
 }
 
 #[test]
+fn test_dequeue_recycle() {
+  let mut q = Q::<int>::new();
+  
+  for val in range(0i, 11i) {
+    q.enqueue(val);
+    assert!(q.dequeue().unwrap() == val);
+  }
+}
+
+#[test]
 fn test_count() {
   let mut q = Q::<int>::new();
   
