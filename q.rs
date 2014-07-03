@@ -1,14 +1,16 @@
 use std::default::Default;
 
+static Q_CAPACITY: uint = 10u;
+
 struct Q<T> {
-  items : [T, ..10],
+  items : [T, ..Q_CAPACITY],
   tail : uint,
   head : uint
 }
 
 impl<T : Default + Copy> Q<T> {
   pub fn new() -> Box<Q<T>> {
-    box Q {items: [Default::default(), ..10],
+    box Q {items: [Default::default(), ..Q_CAPACITY],
            tail: 0,
            head: 0}
   }
@@ -18,11 +20,11 @@ impl<T : Default + Copy> Q<T> {
   }
 
   pub fn enqueue(&mut self, item : T) {
-    if self.count() + 1 == 10 {
-      fail!("Queue is limited to {:u} items", 10u)
+    if self.count() + 1 == Q_CAPACITY {
+      fail!("Queue is limited to {:u} items", Q_CAPACITY)
     }
     self.items[self.tail] = item;
-    self.tail = (self.tail + 1) % 10
+    self.tail = (self.tail + 1) % Q_CAPACITY
   }
 
   pub fn dequeue(&mut self) -> Option<T> {
@@ -30,7 +32,7 @@ impl<T : Default + Copy> Q<T> {
       None
     } else {
       let val : T = self.items[self.head];
-      self.head = (self.head + 1) % 10;
+      self.head = (self.head + 1) % Q_CAPACITY;
       Some(val)
     }
   }
