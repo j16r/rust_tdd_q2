@@ -20,6 +20,10 @@ impl<T : Default + Copy> Q<T> {
     self.count += 1
   }
 
+  pub fn dequeue(&mut self) -> T {
+    Default::default()
+  }
+
   pub fn size(&self) -> uint {
     self.count
   }
@@ -68,6 +72,15 @@ fn test_enqueue_too_many_items() {
   for _ in range(0u, 11u) {
     q.enqueue(0);
   }
+}
+
+#[test]
+fn test_dequeue() {
+  let mut q = Q::<int>::new();
+  
+  q.enqueue(99);
+  q.dequeue();
+  assert!(q.empty());
 }
 
 #[test]
