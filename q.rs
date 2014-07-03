@@ -78,7 +78,7 @@ fn test_empty() {
 #[test]
 fn test_enqueue() {
   let mut q = Q::<int>::new();
-  
+
   q.enqueue(99);
   assert!(!q.empty());
 }
@@ -87,7 +87,7 @@ fn test_enqueue() {
 #[should_fail]
 fn test_enqueue_too_many_items() {
   let mut q = Q::<int>::new();
-  
+
   for _ in range(0u, 11u) {
     q.enqueue(0);
   }
@@ -98,7 +98,7 @@ fn test_dequeue() {
   let mut q = Q::<int>::new();
 
   assert!(q.dequeue().is_none());
-  
+
   q.enqueue(99);
   q.dequeue();
   assert!(q.empty());
@@ -112,7 +112,7 @@ fn test_peek() {
   let mut q = Q::<int>::new();
 
   assert!(q.peek().is_none());
-  
+
   q.enqueue(99);
   assert!(q.peek().unwrap() == 99);
 
@@ -123,7 +123,7 @@ fn test_peek() {
 #[test]
 fn test_dequeue_recycle() {
   let mut q = Q::<int>::new();
-  
+
   for val in range(0i, 11i) {
     q.enqueue(val);
     assert!(q.dequeue().unwrap() == val);
@@ -133,10 +133,10 @@ fn test_dequeue_recycle() {
 #[test]
 fn test_count() {
   let mut q = Q::<int>::new();
-  
+
   q.enqueue(7);
   q.enqueue(102);
-  
+
   assert!(q.count() == 2);
 }
 
