@@ -102,6 +102,19 @@ fn test_dequeue() {
 }
 
 #[test]
+fn test_peek() {
+  let mut q = Q::<int>::new();
+
+  assert!(q.peek().is_none());
+  
+  q.enqueue(99);
+  assert!(q.peek().unwrap() == 99);
+
+  q.enqueue(11);
+  assert!(q.dequeue().unwrap() == 99);
+}
+
+#[test]
 fn test_dequeue_recycle() {
   let mut q = Q::<int>::new();
   
