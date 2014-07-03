@@ -82,6 +82,9 @@ fn test_dequeue() {
   q.enqueue(99);
   q.dequeue();
   assert!(q.empty());
+
+  q.enqueue(11);
+  assert!(q.dequeue() == 11);
 }
 
 #[test]
