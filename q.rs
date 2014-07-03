@@ -2,15 +2,15 @@ use std::default::Default;
 
 struct Q<T> {
   items : [T, ..10],
-  available : uint,
-  position : uint
+  tail : uint,
+  head : uint
 }
 
 impl<T : Default + Copy> Q<T> {
   pub fn new() -> Box<Q<T>> {
     box Q {items: [Default::default(), ..10],
-           available: 0,
-           position: 0}
+           tail: 0,
+           head: 0}
   }
 
   pub fn empty(&self) -> bool {
@@ -18,22 +18,25 @@ impl<T : Default + Copy> Q<T> {
   }
 
   pub fn enqueue(&mut self, item : T) {
-    self.items[self.available] = item;
-    self.available += 1
+    if self.count() + 1 == 10 {
+      fail!("Queue is limited to {:u} items", 10u)
+    }
+    self.items[self.tail] = item;
+    self.tail = (self.tail + 1) % 10
   }
 
   pub fn dequeue(&mut self) -> Option<T> {
     if self.count() == 0 {
       None
     } else {
-      let val : T = self.items[self.position];
-      self.position += 1;
+      let val : T = self.items[self.head];
+      self.head = (self.head + 1) % 10;
       Some(val)
     }
   }
 
   pub fn count(&self) -> uint {
-    self.available - self.position
+    self.tail - self.head
   }
 
   pub fn iter<'r>(&'r self) -> Box<QCursor<'r, T>> {
@@ -48,7 +51,7 @@ struct QCursor<'r, T> {
 
 impl<'r, T> Iterator<&'r T> for QCursor<'r, T> {
   fn next(&mut self) -> Option<&'r T> {
-    if self.position < self.q.available {
+    if self.position < self.q.tail {
       self.position += 1;
       Some(&self.q.items[self.position - 1])
     } else {
