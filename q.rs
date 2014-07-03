@@ -14,7 +14,7 @@ impl<T : Default + Copy> Q<T> {
   }
 
   pub fn empty(&self) -> bool {
-    self.size() == 0
+    self.count() == 0
   }
 
   pub fn enqueue(&mut self, item : T) {
@@ -28,7 +28,7 @@ impl<T : Default + Copy> Q<T> {
     val
   }
 
-  pub fn size(&self) -> uint {
+  pub fn count(&self) -> uint {
     self.available - self.position
   }
 
@@ -91,13 +91,13 @@ fn test_dequeue() {
 }
 
 #[test]
-fn test_size() {
+fn test_count() {
   let mut q = Q::<int>::new();
   
   q.enqueue(7);
   q.enqueue(102);
   
-  assert!(q.size() == 2);
+  assert!(q.count() == 2);
 }
 
 #[test]
