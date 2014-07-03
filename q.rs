@@ -2,31 +2,34 @@ use std::default::Default;
 
 struct Q<T> {
   items : [T, ..10],
-  count : uint
+  available : uint,
+  position : uint
 }
 
 impl<T : Default + Copy> Q<T> {
   pub fn new() -> Box<Q<T>> {
     box Q {items: [Default::default(), ..10],
-           count: 0}
+           available: 0,
+           position: 0}
   }
 
   pub fn empty(&self) -> bool {
-    self.count == 0
+    self.size() == 0
   }
 
   pub fn enqueue(&mut self, item : T) {
-    self.items[self.count] = item;
-    self.count += 1
+    self.items[self.available] = item;
+    self.available += 1
   }
 
   pub fn dequeue(&mut self) -> T {
-    self.count -= 1;
-    Default::default()
+    let val : T = self.items[self.position];
+    self.position += 1;
+    val
   }
 
   pub fn size(&self) -> uint {
-    self.count
+    self.available - self.position
   }
 
   pub fn iter<'r>(&'r self) -> Box<QCursor<'r, T>> {
@@ -41,7 +44,7 @@ struct QCursor<'r, T> {
 
 impl<'r, T> Iterator<&'r T> for QCursor<'r, T> {
   fn next(&mut self) -> Option<&'r T> {
-    if self.position < self.q.count {
+    if self.position < self.q.available {
       self.position += 1;
       Some(&self.q.items[self.position - 1])
     } else {
