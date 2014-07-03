@@ -21,6 +21,7 @@ impl<T : Default + Copy> Q<T> {
   }
 
   pub fn dequeue(&mut self) -> T {
+    self.count -= 1;
     Default::default()
   }
 
