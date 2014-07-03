@@ -81,13 +81,15 @@ fn test_enqueue_too_many_items() {
 #[test]
 fn test_dequeue() {
   let mut q = Q::<int>::new();
+
+  assert!(q.dequeue().is_none());
   
   q.enqueue(99);
   q.dequeue();
   assert!(q.empty());
 
   q.enqueue(11);
-  assert!(q.dequeue() == 11);
+  assert!(q.dequeue().unwrap() == 11);
 }
 
 #[test]
