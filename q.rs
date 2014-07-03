@@ -36,10 +36,10 @@ impl<T : Default + Copy> Q<T> {
   }
 
   pub fn peek(&self) -> Option<T> {
-    if self.count() == 0 {
-      None
-    } else {
+    if self.count() > 0 {
       Some(self.items[self.head])
+    } else {
+      None
     }
   }
 
