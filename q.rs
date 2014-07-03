@@ -37,6 +37,14 @@ impl<T : Default + Copy> Q<T> {
     }
   }
 
+  pub fn peek(&self) -> Option<T> {
+    if self.count() == 0 {
+      None
+    } else {
+      Some(self.items[self.head])
+    }
+  }
+
   pub fn count(&self) -> uint {
     self.tail - self.head
   }
