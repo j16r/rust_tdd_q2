@@ -28,13 +28,11 @@ impl<T : Default + Copy> Q<T> {
   }
 
   pub fn dequeue(&mut self) -> Option<T> {
-    if self.count() == 0 {
-      None
-    } else {
-      let val : T = self.items[self.head];
+    let val = self.peek();
+    if val.is_some() {
       self.head = (self.head + 1) % Q_CAPACITY;
-      Some(val)
     }
+    val
   }
 
   pub fn peek(&self) -> Option<T> {
