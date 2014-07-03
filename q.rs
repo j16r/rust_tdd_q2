@@ -22,10 +22,14 @@ impl<T : Default + Copy> Q<T> {
     self.available += 1
   }
 
-  pub fn dequeue(&mut self) -> T {
-    let val : T = self.items[self.position];
-    self.position += 1;
-    val
+  pub fn dequeue(&mut self) -> Option<T> {
+    if self.count() == 0 {
+      None
+    } else {
+      let val : T = self.items[self.position];
+      self.position += 1;
+      Some(val)
+    }
   }
 
   pub fn count(&self) -> uint {
